@@ -10,7 +10,7 @@ import argparse
 import pandas as pd
 import os
 import sys
-sys.path.append('/home/cmramirez/Desktop/Python/PREPARAR DATOS/timbral_models') 
+sys.path.append('../timbral_models') 
 import timbral_models as tm
 
 ###################################################
@@ -24,7 +24,7 @@ parser.add_argument('--n_splits', type=int, default=5,
                     help='Number of splits in the stratified cross validation')
 
 ## Checkpoint_path
-parser.add_argument('--save_checkpoint_path', type=str, default = '/home/cmramirez/Desktop/Python/PAPER_dic_2023/3_EXTRACT_FEATURES/checkpoint')
+parser.add_argument('--save_checkpoint_path', type=str, default = '../3_EXTRACT_FEATURES/checkpoint')
 
 ## Checkpoint params
 parser.add_argument('--establish_checkpoint', type=bool, default=True,
@@ -58,22 +58,22 @@ if args.cuda == 1:
 ###################################################
 
 # Ruta donde vamos a extraer las features
-current_path = '/home/cmramirez/Desktop/Python/PAPER_dic_2023/3_EXTRACT_FEATURES'
+current_path = !pwd
 
 # Ruta donde están guardadas las etiquetas de manera estructurada
-labels_path = '/home/cmramirez/Desktop/Python/PAPER_dic_2023/2_STRATIFIED_K_FOLD'
+labels_path = '../2_STRATIFIED_K_FOLD'
 
 # Audio path
 if args.audio_type == 'chunk':
-    audio_path = '/home/cmramirez/Documents/audios_con_etiquetas/audios_chunk'
+    audio_path = '../audios_chunk'
 elif args.audio_type == 'audio1min':
-    audio_path = '/home/cmramirez/Documents/audios_con_etiquetas'
+    audio_path = '../audios_con_etiquetas'
 
 # Usuarias
 users = ['P007','P008','P041', 'P059','T01','T02','T03','T05','V042','V104','V110','V124','V134']
 
 # Subcarpetas
-subfolders = ['train','test']
+subfolders = ['test']
 
 feature_names_timbrals =  ['hardness',
                             'depth',
@@ -169,9 +169,9 @@ for i in range(1, args.n_splits + 1): # Recorrer n_folds
 
         dt_final_timbrals.to_csv(f"{current_path}/fold_{i}_features/{sub}/dt_timbrals.csv",index=False)
 
-if os.path.exists('/home/cmramirez/Desktop/Python/PAPER_dic_2023/3_EXTRACT_FEATURES/errors'):
+if os.path.exists('../errors'):
 
-    files_in_directory = os.listdir('/home/cmramirez/Desktop/Python/PAPER_dic_2023/3_EXTRACT_FEATURES/errors')
+    files_in_directory = os.listdir('../errors')
     
     if not files_in_directory:
         print('SUCCESFULLY FINISHED :)!!!')
